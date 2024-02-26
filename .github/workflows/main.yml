@@ -37,4 +37,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3  
     - name: "Unit Test"
-      run: npm test
+      run: docker-compose exec web npm test
