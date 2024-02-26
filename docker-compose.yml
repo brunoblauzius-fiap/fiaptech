@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: projeto-pedido
+    build:
+      context: .
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+    ports:
+      - 3000:3000
+    environment:
+      MONGO_PASS: projeto-pedido
+      MONGO_PORT: 27017
+      MONGO_COLLECTION: admin
+
+      CHOKIDAR_USEPOLLING: "true"
+      MARIADB_HOST: ${MARIADB_HOST}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASS: ${MARIADB_PASS}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_PORT: ${MARIADB_PORT}
+      MP_URL: ${MP_URL}
+      MP_CLIENT_ID: ${MP_CLIENT_ID}
+      MP_CLIENT_SECRET: ${MP_CLIENT_SECRET}
+      MP_NOTIFICATION_URL: ${MP_NOTIFICATION_URL}
+    depends_on:
+      # - mongo
+      - maria-db
+
+  # mongo:
+  #   image: mongo
+  #   ports:
+  #     - "27020:27017"
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: projeto-pedido
+  #   volumes:
+  #     - mongo-data:/data/db
+  #   logging:
+  #     driver: none
+
+  maria-db:
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    environment:
+      MARIADB_DATABASE: projeto-pedidos
+      MARIADB_USER: root
+      MARIADB_PASSWORD: 12345678
+      MARIADB_ROOT_PASSWORD: 12345678
+    ports:
+      - 3321:3306
+
+volumes:
+  # mongo-data:
+  mariadb-data:

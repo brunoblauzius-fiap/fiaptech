@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels:
+    app: db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-deployment
+  template:
+    metadata:
+      labels:
+        app: db-deployment
+    spec:
+      containers:
+        - name: db-deployment-container
+          image: mariadb:latest
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: qwe1234
+            - name: MYSQL_DATABASE
+              value: projeto-pedidos
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mariadb-data
+              mountPath: /var/lib/mysql
+          resources:
+            limits:
+              cpu: "0.5"
+            requests:
+              cpu: 10m
+      volumes:
+        - name: mariadb-data
+          persistentVolumeClaim:
+            claimName: mariadb-data-claim
