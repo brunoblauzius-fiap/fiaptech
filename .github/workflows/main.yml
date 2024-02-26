@@ -32,4 +32,4 @@ jobs:
         MP_NOTIFICATION_URL: ${{ secrets.MP_NOTIFICATION_URL }}
       
     - name: "Unit Test"
-      run: docker run web npm test
+      run: docker run docker.io/library/fiaptech_web npm test
