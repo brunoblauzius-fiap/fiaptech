@@ -31,10 +31,5 @@ jobs:
         MP_CLIENT_ID: ${{ secrets.MP_CLIENT_ID }}
         MP_NOTIFICATION_URL: ${{ secrets.MP_NOTIFICATION_URL }}
       
-  tests:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3  
     - name: "Unit Test"
       run: docker-compose exec web npm test
