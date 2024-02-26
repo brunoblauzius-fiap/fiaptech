@@ -10,10 +10,11 @@ on:
     branches: [ "dev", "homolog" ]
 
 jobs:
-  build:
+  Build-and-Test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
     - name: "Construir imagem Docker"
       run: docker-compose up -d
       env:
@@ -26,16 +27,14 @@ jobs:
         MP_CLIENT_SECRET: ${{ secrets.MP_CLIENT_SECRET }}
         MP_CLIENT_ID: ${{ secrets.MP_CLIENT_ID }}
         MP_NOTIFICATION_URL: ${{ secrets.MP_NOTIFICATION_URL }}
-  
-  test:
+        
+    - name: "Unit Test" 
+      run: docker run docker.io/library/fiaptech_web npm test
+
+  SonarCube:
     runs-on: ubuntu-latest
-    needs: build
+    needs: Build-and-Test
     steps:
-    - name: Recuperar ID da última imagem
-      id: retrieve-image-id
-      run: echo "::set-output name=image_id::$(docker images --format "{{.ID}}" | head -n 1)"
-      
-    - name: Usar imagem Docker
-      run: docker run $(echo ${{ steps.retrieve-image-id.outputs.image_id }}) npm test
-    #- name: "Unit Test" 
-    #  run: docker run docker.io/library/fiaptech_web npm test
+      - uses: actions/checkout@v3
+      - name: "Verificando no sonar"
+        run: echo "FUI NO SONAR."
