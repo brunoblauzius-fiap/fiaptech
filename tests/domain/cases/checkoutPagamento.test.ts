@@ -13,7 +13,7 @@ import PaymentoMethods from '../../../app/entity/enum/PaymentoMethods';
 
 describe("TEST use case Checkout Pagamento.", () =>{
     test("Teste de Confirmação de pagamento PIX" , async () => {
-        let mysqlDB = new MysqlDataBase();
+        // let mysqlDB = new MysqlDataBase();
         // let pedidoRepository = new PedidoRepository(mysqlDB);
         // let pedido = await pedidoRepository.findById(new Uint8Array(1));
         // expect(pedido).not.toBeNull()
