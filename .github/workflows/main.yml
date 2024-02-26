@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/upload-artifact@v3
       with:
-          name: workspace_artifacts
+          name: projeto tech
           path: ${{github.workspace}}
       name: "Build images"
       run: docker-compose up -d
