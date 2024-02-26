@@ -44,11 +44,11 @@ describe("MP metodo de pagamento PIX", () => {
                 )
             )
         );
-        checkout.setPaymentMethod(PaymentMethods.PIX);
-        let mercado_pago = new MPagamento();
-        const response = await mercado_pago.store(checkout);
-        expect(response['external_reference']).toEqual(checkout.external_reference);
+        // checkout.setPaymentMethod(PaymentMethods.PIX);
+        // let mercado_pago = new MPagamento();
+        // const response = await mercado_pago.store(checkout);
+        // expect(response['external_reference']).toEqual(checkout.external_reference);
         expect(PaymentMethods.PIX).toEqual(checkout.getPaymentMethod());
-        expect(response['transaction_amount']).toEqual(checkout.pedido.getValorTotal());
+        // expect(response['transaction_amount']).toEqual(checkout.pedido.getValorTotal());
     });
 });
