@@ -8,27 +8,27 @@ describe("Validando Entity Cliente", () => {
     test("Instanciar Cliente", () => {
         let dataClient = new cliente(
             "Heitor Bernardo Victor Nogueira",
-            "heitoBVN@gmail.com",
+            "heitobvn@gmail.com",
             "317.594.877-40"
         );
         expect("Heitor Bernardo Victor Nogueira").toEqual(dataClient.name);
-        expect("heitoBVN@gmail.com").toEqual(dataClient.email);
+        expect("heitobvn@gmail.com").toEqual(dataClient.email);
         expect("31759487740").toEqual(dataClient.cpf_cnpj);
     })
     test("CPF com formatação", () => {
         let dataClient = new cliente(
             "Heitor Bernardo Victor Nogueira",
-            "heitoBVN@gmail.com",
+            "heitobvn@gmail.com",
             "317.594.877-40"
         );
         expect("Heitor Bernardo Victor Nogueira").toEqual(dataClient.name);
-        expect("heitoBVN@gmail.com").toEqual(dataClient.email);
+        expect("heitobvn@gmail.com").toEqual(dataClient.email);
         expect("317.594.877-40").not.toEqual(dataClient.cpf_cnpj);
     })
     test("CPF VÁLIDO", () => {
         let dataClient = new cliente(
             "Heitor Bernardo Victor Nogueira",
-            "heitoBVN@gmail.com",
+            "heitobvn@gmail.com",
             "317.594.877-40"
         );
         expect(dataClient.isValidCpf()).toEqual(true);
@@ -37,7 +37,7 @@ describe("Validando Entity Cliente", () => {
         expect(() => {
             let dataClient = new cliente(
                 "Heitor Bernardo Victor Nogueira",
-                "heitoBVN@gmail.com",
+                "heitobvn@gmail.com",
                 "317.594.877-41"
             );
         }).toThrow("CPF do cliente é inválido.");
@@ -45,7 +45,7 @@ describe("Validando Entity Cliente", () => {
     test("E-MAIL VÁLIDO", () => {
         let dataClient = new cliente(
             "Heitor Bernardo Victor Nogueira",
-            "heitoBVN@gmail.com",
+            "heitobvn@gmail.com",
             "317.594.877-40"
         );
         expect(dataClient.isValidEmail()).toEqual(true);
@@ -54,7 +54,7 @@ describe("Validando Entity Cliente", () => {
         expect(() => {
             let dataClient = new cliente(
                 "Heitor Bernardo Victor Nogueira",
-                "heitoBVN@gmail",
+                "heitobvn@gmail",
                 "317.594.877-40"
             );
         }).toThrow("E-mail do cliente é inválido.");
