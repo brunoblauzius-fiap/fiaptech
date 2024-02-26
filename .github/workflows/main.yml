@@ -17,8 +17,8 @@ jobs:
         #node-version: [14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/upload-artifact@v3
-      name: "Build images"
+    - uses: actions/checkout@v3
+    - name: "Build images"
       run: docker-compose up -d
       env:
         MARIADB_HOST: ${{ secrets.MARIADB_HOST }}
