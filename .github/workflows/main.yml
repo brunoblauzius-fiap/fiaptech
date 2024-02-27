@@ -21,7 +21,7 @@ jobs:
     - name: Construir imagem Docker
       run: docker build -t bruno01/fiap01:latest .
 
-    - name: Fazer push da imagem para o Docker Hub
+    - name: Fazer push da imagem para o Docker Hub 
       run: docker push bruno01/fiap01:latest
     
     - name: "Construir imagem Docker"
