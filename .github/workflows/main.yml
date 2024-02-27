@@ -31,10 +31,15 @@ jobs:
     - name: "Unit Test" 
       run: docker run docker.io/library/fiaptech_web npm test
 
-  SonarCube:
+  SonarCloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
-    needs: Build-and-Test
     steps:
       - uses: actions/checkout@v3
-      - name: "Verificando no sonar"
-        run: echo "FUI NO SONAR."
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
