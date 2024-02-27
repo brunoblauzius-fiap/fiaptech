@@ -31,8 +31,9 @@ jobs:
     - name: "Unit Test" 
       run: docker run docker.io/library/fiaptech_web npm test
 
-  SonarCloud:
+  sonarcloud:
     name: SonarCloud
+    needs: Build-and-Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
