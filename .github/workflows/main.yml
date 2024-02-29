@@ -104,7 +104,7 @@ jobs:
 
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
-    name: Deploy Produção
+    name: Deploy Homologação
     needs : [Build-and-Test, Test, sonarcloud]
     environment: projeto tech
     runs-on: ubuntu-latest
