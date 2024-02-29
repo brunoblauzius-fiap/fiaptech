@@ -31,7 +31,17 @@ jobs:
         username: ${{ vars.DOCKER_USER }}
         password: ${{ secrets.DOCKER_PASS }}
     -
-      name: Build and push
+      name: Build and Push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        load: true
+        tags: bruno01/fiap01:${{ github.run_number }}
+    -
+      name: "Test" 
+      run: docker run bruno01/fiap01:${{ github.run_number }} npm test
+    -
+      name: Build and Push
       uses: docker/build-push-action@v5
       with:
         context: .
