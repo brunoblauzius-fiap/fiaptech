@@ -13,17 +13,29 @@ jobs:
   Build-and-Test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Logar no Docker Hub
-      run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login --username ${{ vars.DOCKER_USER }} --password ${{ vars.DOCKER_PASS }}
-
-    - name: Construir imagem Docker
-      run: docker build -t bruno01/fiap01:$GITHUB_RUN_NUMBER .
-
-    - name: Fazer push da imagem para o Docker Hub 
-      run: docker push bruno01/fiap01:$GITHUB_RUN_NUMBER
-
+    -
+      name: Checkout
+      uses: actions/checkout@v4
+    -
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASS }}
+    -
+      name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: bruno01/fiap01:$GITHUB_RUN_NUMBER
+        
   Test:
     name: "Teste unitário"
     runs-on: ubuntu-latest
