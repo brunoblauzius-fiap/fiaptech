@@ -101,6 +101,20 @@ jobs:
       -
         name: "Realizando deploy DEV"
         run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
+
+  deploy-homolog:
+    if: ${{github.ref_name == 'homolog'}}
+    name: Deploy Produção
+    needs : [Build-and-Test, Test, sonarcloud]
+    environment: projeto tech
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: "Pre Deploy"
+        uses: actions/checkout@v3
+      -
+        name: "Realizando deploy HOMOLOG"
+        run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
   
   deploy-prod:
     if: ${{github.ref_name == 'main'}}
