@@ -73,6 +73,7 @@ jobs:
   sonarcloud:
     name: SonarCloud
     needs: Test
+    environment: projeto tech
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
