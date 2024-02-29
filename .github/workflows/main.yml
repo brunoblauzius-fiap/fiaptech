@@ -89,7 +89,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy-dev:
-    if: ${{github.ref == 'refs/heads/dev'}}
+    if: ${{github.ref_name == 'dev'}}
     name: Deploy Desenvolvimento
     needs : [Build-and-Test, Test, sonarcloud]
     environment: projeto tech
@@ -103,7 +103,7 @@ jobs:
         run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
   
   deploy-prod:
-    if: ${{github.ref == 'refs/heads/main'}}
+    if: ${{github.ref_name == 'main'}}
     name: Deploy Produção
     needs : [Build-and-Test, Test, sonarcloud]
     environment: projeto tech
