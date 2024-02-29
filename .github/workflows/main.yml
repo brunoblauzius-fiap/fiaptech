@@ -16,6 +16,9 @@ jobs:
     -
       name: Checkout
       uses: actions/checkout@v4
+      
+    - name: vars
+      run:  echo "${{ vars.DOCKER_USER }} ${{ secrets.DOCKER_PASS }}"
     -
       name: Set up QEMU
       uses: docker/setup-qemu-action@v3
