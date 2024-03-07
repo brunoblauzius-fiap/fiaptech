@@ -89,23 +89,10 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy-dev:
-    if: ${{github.ref_name == 'dev'}}
-    name: Deploy Desenvolvimento
-    needs : [Build-and-Test, Test, sonarcloud]
-    environment: projeto tech
-    runs-on: ubuntu-latest
-    steps:
-      - 
-        name: "Pre Deploy"
-        uses: actions/checkout@v3
-      -
-        name: "Realizando deploy DEV"
-        run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
-      - 
-        name: "Deploy"
-        uses: bruno-blauzius/kubernetes-manifest/.github/workflows/main.yml@dev
-        # secrets:
-        #  DOCKER_HUB_PROJETO: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
+    uses: bruno-blauzius/kubernetes-manifest/.github/workflows/main.yml@dev
+    secrets:
+      DOCKER_HUB_PROJETO: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
+
 
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
