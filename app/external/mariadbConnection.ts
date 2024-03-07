@@ -43,50 +43,54 @@ class MysqlConnection
                 description text null,
                 value decimal(19,2) not null default 0,
                 created datetime null,
-                modified datetime null
+                modified datetime null,
+                FOREIGN KEY (category_id) REFERENCES categoria(id)
             )  ENGINE=INNODB;
         `);
 
         await this.connection.query(`
             CREATE TABLE IF NOT EXISTS pedidos (
                 id INT PRIMARY KEY AUTO_INCREMENT,
-                customer_id INT not null,
-                status VARCHAR(200) not null default 'created',
-                total_value decimal(19,2) not null default 0,
-                created datetime null,
-                modified datetime null
-            )  ENGINE=INNODB;
+                customer_id INT NOT NULL,
+                status VARCHAR(200) NOT NULL DEFAULT 'created',
+                total_value DECIMAL(19,2) NOT NULL DEFAULT 0,
+                created DATETIME NULL,
+                modified DATETIME NULL,
+                FOREIGN KEY (customer_id) REFERENCES cliente(id)
+            ) ENGINE=INNODB;
         `);
 
         await this.connection.query(`
-            CREATE TABLE IF NOT EXISTS pedido_produtos (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                order_id INT not null,
-                product_id INT not null,
-                created datetime null,
-                modified datetime null
-            )  ENGINE=INNODB;
+        CREATE TABLE IF NOT EXISTS pedido_produtos (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            order_id INT NOT NULL,
+            product_id INT NOT NULL,
+            created DATETIME NULL,
+            modified DATETIME NULL,
+            FOREIGN KEY (order_id) REFERENCES pedidos(id),
+            FOREIGN KEY (product_id) REFERENCES produto(id)
+        ) ENGINE=INNODB;
         `);
 
         await this.connection.query(`
-            CREATE TABLE IF NOT EXISTS checkout (
-                id INT PRIMARY KEY AUTO_INCREMENT,
-                uuid VARCHAR(254) not null unique,
-                status int(11) not null default 1,
-                payment_method_id int(11) not null default 1,
-                pedido_id int(11) not null,
-                card_number varchar(50) null,
-                card_cvv varchar(10) null,
-                card_expiration_date varchar(10) null,
-                payer_name varchar(245) null,
-                payer_email varchar(245) null,
-                payer_document varchar(16) null,
-                total_value decimal(19,2) not null default 0,
-                payload text null,
-                external_reference varchar(254) null,
-                created datetime null,
-                modified datetime null
-            )  ENGINE=INNODB;
+        CREATE TABLE IF NOT EXISTS checkout (
+            id INT PRIMARY KEY AUTO_INCREMENT,
+            uuid VARCHAR(254) NOT NULL UNIQUE,
+            status INT(11) NOT NULL DEFAULT 1,
+            payment_method_id INT(11) NOT NULL DEFAULT 1,
+            pedido_id INT(11) NOT NULL,
+            card_number VARCHAR(50) NULL,
+            card_cvv VARCHAR(10) NULL,
+            card_expiration_date VARCHAR(10) NULL,
+            payer_name VARCHAR(245) NULL,
+            payer_email VARCHAR(245) NULL,
+            payer_document VARCHAR(16) NULL,
+            total_value DECIMAL(19,2) NOT NULL DEFAULT 0, 
+            payload TEXT NULL,
+            created DATETIME NULL,
+            modified DATETIME NULL,
+            FOREIGN KEY (pedido_id) REFERENCES pedidos(id)
+        ) ENGINE=INNODB;
         `);  
     }
 
