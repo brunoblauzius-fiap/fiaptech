@@ -7,7 +7,7 @@ on:
   workflow_call:
     inputs:
       DOCKER_HUB_TAG:
-        description: "Tag do projeto"
+        description: "Tag do projeto hub"
         type: string
   push:
     branches: [ "dev", "homolog", "main" ]
