@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "dev", "homolog" ]
+    branches: [ "dev", "homolog", "main" ]
 
 jobs:
   Build-and-Test:
@@ -101,6 +101,11 @@ jobs:
       -
         name: "Realizando deploy DEV"
         run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
+      - 
+        name: "Deploy"
+        uses: bruno-blauzius/kubernetes-manifest/.github/workflows/main.yml@dev
+        # secrets:
+        #  DOCKER_HUB_PROJETO: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
 
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
