@@ -4,9 +4,9 @@
 name: Node.js CI
 
 on:
+  workflow_call:
   push:
     branches: [ "dev", "homolog", "main" ]
-  workflow_call:
 
 jobs:
   Build-and-Test:
@@ -90,6 +90,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy-dev:
+    name: Deploy Desemvolvimento
+    if: ${{github.ref_name == 'dev'}}
+    needs : [Build-and-Test, Test, sonarcloud]
     uses: bruno-blauzius/kubernetes-manifest/.github/workflows/main.yml@dev
     secrets:
       DOCKER_HUB_PROJETO: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
