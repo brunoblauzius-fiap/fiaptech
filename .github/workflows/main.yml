@@ -4,10 +4,6 @@
 name: Node.js CI
 
 on:
-  workflow_call:
-    secrets:
-      DOCKER_HUB_TAG:
-        description: "Tag do projeto hub"
   push:
     branches: [ "dev", "homolog", "main" ]
 
@@ -97,8 +93,8 @@ jobs:
     if: ${{github.ref_name == 'dev'}}
     needs : [Build-and-Test, Test, sonarcloud]
     uses: bruno-blauzius/kubernetes-manifest/.github/workflows/main.yml@dev
-    #secrets:
-    #  DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
+    with:
+      DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
 
 
   deploy-homolog:
