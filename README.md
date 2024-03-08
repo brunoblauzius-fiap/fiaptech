@@ -4,7 +4,7 @@
 
 - `Architecture` : Hexagonal
 
-  A aquitetura do segue o modelo de diretórios listado a baixo utilizado o NODE js como linguagem de progamação e MONGO como storage database.
+  A aquitetura do segue o modelo de diretórios listado a baixo utilizado o NODE js como linguagem de programação.
 
 ```bash
     |__ app/
