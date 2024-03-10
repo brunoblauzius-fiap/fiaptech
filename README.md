@@ -63,6 +63,9 @@ Cada nova tabela desenvolvida DEVE ser adicionado o create no arquivo para que s
         ...
   `);
 ```
+## MODELAGEM DE DADOS
+![image](https://github.com/bruno-blauzius/fiaptech/assets/8801500/d1a127d8-17fd-438d-bf0d-db7319e46888)
+
 
 ## DATA BASE EXECUTABLE
 
