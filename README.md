@@ -181,6 +181,14 @@ Nessa parte estaremos mostrando o projeto em execução tanto no POSTMAN quando 
 
 https://www.loom.com/share/88256ad46d1842c8905884578b9627bd?sid=d1436399-221c-481e-83a1-cb232861e02b
 
+### - BANCO DE DADOS RDS MYSQL TECH CHALLENGE
+
+Neste vídeo, estou criando um banco de dados usando o Terraform. Explico o processo passo a passo, desde o planejamento até a configuração das instâncias e subredes. Também mostro as configurações do banco de dados e falo sobre a segurança da VPC. Assista para entender como criar um banco de dados de forma automatizada e segura.
+
+https://www.loom.com/share/899b10cecb8b4618ab141e491e81a8b4?sid=fb46921a-f021-4f11-80a3-ede33b20d431
+
+Codigo: https://github.com/bruno-blauzius/tech-infra-db
+
 ### Para atualizar a aplicação
 
 DEVE ser criada uma nova imagem no DockerHub e atualizar o arquivo de deployment no diretório kubernets/api/ arquivo dep-api.yaml
