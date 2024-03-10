@@ -1,5 +1,43 @@
 <h1>Tech Challenge</h1>
 
+### TECH CHALLENGE 2
+
+![plot](arquitetura.jpg)
+
+#### - ARQUITETURA TECH CHALLENGE
+
+Aqui iremos mostrar o desenho da arquitetura e como desenvolvemos a solução.
+
+https://www.loom.com/share/d3dee296f478469498f8517de8f3d615?sid=f3df19b9-9f5b-4999-a402-cc458089aa9d
+
+#### - KUBERNETS TECH CHALLENGE
+
+Nessa parte estaremos mostrando o projeto em execução tanto no POSTMAN quando no SGBD e o autoescaling da aplicação e a permanencia dos dados mesmo quando a pod foi excluida e reiniciada novamente.
+
+https://www.loom.com/share/88256ad46d1842c8905884578b9627bd?sid=d1436399-221c-481e-83a1-cb232861e02b
+
+##
+### TECH CHALLENGE 3
+#### - BANCO DE DADOS RDS MYSQL TECH CHALLENGE
+
+Neste vídeo, estou criando um banco de dados usando o Terraform. Explico o processo passo a passo, desde o planejamento até a configuração das instâncias e subredes. Também mostro as configurações do banco de dados e falo sobre a segurança da VPC. Assista para entender como criar um banco de dados de forma automatizada e segura.
+
+https://www.loom.com/share/899b10cecb8b4618ab141e491e81a8b4?sid=fb46921a-f021-4f11-80a3-ede33b20d431
+
+Codigo: https://github.com/bruno-blauzius/tech-infra-db
+
+#### INFRAESTRUTURA TERRAFORM APPLY INFRA EKS
+
+Neste Entregavel teremos toda a infraestrutura criada com terraform e seus códigos, Explico o processo passo a passo de como foi feito o desenvolvimento e a entrega do projeto, no primeiro video coloco toda a estrutura na aws e no segundo apresento um pouco do código.
+
+Video 1:
+https://www.loom.com/share/7f900ff13b2e40a08772ff4b26cf5331?sid=4a97fa7f-365e-4629-8c2b-436e8ab0d823
+
+Video 2: 
+https://www.loom.com/share/721f6c6f83b740259bc1be26ca78445c?sid=5ef186c8-1b5b-469e-ad5c-2ddcc9d14dca
+
+Código: https://github.com/bruno-blauzius/tech-infra
+
 ## Architecture
 
 - `Architecture` : Hexagonal
@@ -166,28 +204,6 @@ Para garantir a alta disponibilidade do sistema foi utilizado o kubernets, usand
 
 O banco de dados a principio não é alto escalavel porém foi configurado para uma unica replica sendo assim podemos mudar com facilidade adicionando a escalabilidade horizontal, também foi criado um volume para persistência de dados assim garantimos a integridade dos dados quando uma pod morrer ou for excluída.
 A porta para para o ambiente externo está na 30336 e referenciada para o ambiente interno na porta padrão no mariadb 3306.
-
-![plot](arquitetura.jpg)
-
-#### - ARQUITETURA TECH CHALLENGE
-
-Aqui iremos mostrar o desenho da arquitetura e como desenvolvemos a solução.
-
-https://www.loom.com/share/d3dee296f478469498f8517de8f3d615?sid=f3df19b9-9f5b-4999-a402-cc458089aa9d
-
-#### - KUBERNETS TECH CHALLENGE
-
-Nessa parte estaremos mostrando o projeto em execução tanto no POSTMAN quando no SGBD e o autoescaling da aplicação e a permanencia dos dados mesmo quando a pod foi excluida e reiniciada novamente.
-
-https://www.loom.com/share/88256ad46d1842c8905884578b9627bd?sid=d1436399-221c-481e-83a1-cb232861e02b
-
-### - BANCO DE DADOS RDS MYSQL TECH CHALLENGE
-
-Neste vídeo, estou criando um banco de dados usando o Terraform. Explico o processo passo a passo, desde o planejamento até a configuração das instâncias e subredes. Também mostro as configurações do banco de dados e falo sobre a segurança da VPC. Assista para entender como criar um banco de dados de forma automatizada e segura.
-
-https://www.loom.com/share/899b10cecb8b4618ab141e491e81a8b4?sid=fb46921a-f021-4f11-80a3-ede33b20d431
-
-Codigo: https://github.com/bruno-blauzius/tech-infra-db
 
 ### Para atualizar a aplicação
 
