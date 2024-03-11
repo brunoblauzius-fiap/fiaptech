@@ -91,7 +91,7 @@ jobs:
     name: Deploy Desenvolvimento - 
     if: ${{github.ref_name == 'dev'}}
     needs : [Build-and-Test, Test, sonarcloud]
-    uses: bruno-blauzius/kubernetes-manifest/.github/workflows/main.yml@dev
+    uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
     with:
       DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
 
