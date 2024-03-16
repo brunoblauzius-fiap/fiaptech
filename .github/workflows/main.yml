@@ -93,8 +93,7 @@ jobs:
     uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
     with:
       DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
-    secrets: 
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    secrets: inherit
       
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
