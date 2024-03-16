@@ -70,8 +70,7 @@ jobs:
         
     - name: "Unit Test" 
       run: docker run docker.io/library/fiaptech_web npm test
-
-      
+   
   sonarcloud:
     name: SonarCloud
     needs: [Build-and-Test, Test]
@@ -94,8 +93,6 @@ jobs:
     uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
     with:
       DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
-      AWS_ACCESS_KEY_ID : ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY : ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION : ${{ vars.AWS_REGION }}
 
 
