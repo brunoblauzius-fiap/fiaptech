@@ -88,15 +88,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy-dev:
-    runs-on: ubuntu-latest
     if: ${{github.ref_name == 'dev'}}
     needs: [Build-and-Test, Test, sonarcloud]
-    steps:
-      - name: Deploy Production 
-        uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
-        with:
-          DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }} 
-          
+    uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
+    with:
+      DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }} 
+      AWS_SECRET_ACCESS_KEY: TESTE
       
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
