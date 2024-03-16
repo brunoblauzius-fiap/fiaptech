@@ -4,7 +4,7 @@
 name: Node.js CI
 on:
   push:
-    branches: [ "dev", "homolog", "main" ]
+    branches: [ "dev", "main" ]
 
 jobs:
   Build-and-Test:
