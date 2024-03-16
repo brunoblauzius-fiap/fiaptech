@@ -87,14 +87,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   deploy-dev:
-    name: Deploy Desenvolvimento - 
+    name: Deploy Production 
     if: ${{github.ref_name == 'dev'}}
-    needs : [Build-and-Test, Test, sonarcloud]
+    needs: [Build-and-Test, Test, sonarcloud]
     uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
     with:
       DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
-
-
+    secrets: inherit
+      
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
     name: Deploy Homologação
