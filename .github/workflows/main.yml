@@ -93,7 +93,6 @@ jobs:
     uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
     with:
       DOCKER_HUB_TAG: bruno01/fiap01:${{ github.ref_name}}_${{ github.run_number }}
-      AWS_REGION : ${{ vars.AWS_REGION }}
 
 
   deploy-homolog:
