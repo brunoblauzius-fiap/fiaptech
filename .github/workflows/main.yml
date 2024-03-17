@@ -5,7 +5,6 @@ name: Node.js CI
 on:
   push:
     branches: [ "dev", "main" ]
-  workflow_dispatch:
 
 jobs:
   Build-and-Test:
@@ -89,7 +88,7 @@ jobs:
      needs: [Build-and-Test, Test, sonarcloud]
      uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
      with:
-       DOCKER_HUB_TAG: bruno01/fiap01:${{ github.sha }}
+       DOCKER_HUB_TAG: ${{ github.sha }}
      secrets: inherit
      
   deploy-homolog:
