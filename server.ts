@@ -34,7 +34,7 @@ export default class Server{
         this.app.use(Logger.log);
 
         this.app.route('/').get((req, res) => {
-            res.json({'version' : '1.1.1'});
+            res.json({'version' : '1.1.2'});
         });
         this.app.use('/api/v1/', userRouter(this.dbconnection));
         this.app.use(Auth.validate);
