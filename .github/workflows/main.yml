@@ -108,7 +108,7 @@ jobs:
               -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
               https://api.github.com/repos/brunoblauzius-fiap/fiaptech/actions/workflows/87456268/dispatches \
-              -d '{"ref":"dev","inputs":{"DOCKER_HUB_TAG": ${{ github.sha }} }}'
+              -d '{"ref":"dev","inputs":{"DOCKER_HUB_TAG": "${{ github.sha }}" }}'
           
 
   deploy-homolog:
