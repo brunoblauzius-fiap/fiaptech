@@ -120,6 +120,6 @@ jobs:
         name: "Pre Deploy"
         uses: actions/checkout@v3
       -
-        name: "Realizando deploy MAIN"
+        name: "Realizando deploy main"
         run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
     
