@@ -88,7 +88,7 @@ jobs:
   #    needs: [Build-and-Test, Test, sonarcloud]
   #    uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
   #    with:
-  #      DOCKER_HUB_TAG: ${{ github.sha }}
+  #      docker_hub_tag: ${{ github.sha }}
   #    secrets: inherit
 
   deploy-dev:
@@ -107,8 +107,8 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
               -H "X-GitHub-Api-Version: 2022-11-28" \
-              https://api.github.com/repos/brunoblauzius-fiap/fiaptech/actions/workflows/87456268/dispatches \
-              -d '{"ref":"dev","inputs":{"DOCKER_HUB_TAG": "${{ github.sha }}" }}'
+              https://api.github.com/repos/brunoblauzius-fiap/kubernetes-manifest/actions/workflows/main.yml/dispatches \
+              -d '{"ref":"dev","inputs":{"docker_hub_tag": "${{ github.sha }}"}}'
           
 
   deploy-homolog:
