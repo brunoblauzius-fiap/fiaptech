@@ -83,14 +83,34 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+  # deploy-dev:
+  #    if: ${{github.ref_name == 'dev'}}
+  #    needs: [Build-and-Test, Test, sonarcloud]
+  #    uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
+  #    with:
+  #      DOCKER_HUB_TAG: ${{ github.sha }}
+  #    secrets: inherit
+
   deploy-dev:
-     if: ${{github.ref_name == 'dev'}}
-     needs: [Build-and-Test, Test, sonarcloud]
-     uses: brunoblauzius-fiap/kubernetes-manifest/.github/workflows/main.yml@dev
-     with:
-       DOCKER_HUB_TAG: ${{ github.sha }}
-     secrets: inherit
-     
+    if: ${{github.ref_name == 'dev'}}
+    needs: [Build-and-Test, Test, sonarcloud]
+    environment: projeto tech
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Dispatch manual event
+        run: | 
+              curl -L \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/brunoblauzius-fiap/fiaptech/actions/workflows/87456268/dispatches \
+              -d '{"ref":"dev","inputs":{"DOCKER_HUB_TAG": ${{ github.sha }} }}'
+          
+
   deploy-homolog:
     if: ${{github.ref_name == 'homolog'}}
     name: Deploy Homologação
