@@ -1,9 +1,10 @@
 <h1>Tech Challenge</h1>
 
 ### TECH CHALLENGE 2
-
+Arquitetura 1
 ![plot](arquitetura.jpg)
-
+Arquitetura AWS
+![plot](Diagrama-novo.jpg)
 #### - ARQUITETURA TECH CHALLENGE
 
 Aqui iremos mostrar o desenho da arquitetura e como desenvolvemos a solução.
