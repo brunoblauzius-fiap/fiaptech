@@ -1,0 +1,119 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  Build-and-Test:
+    name: Construindo Imagem
+    runs-on: ubuntu-latest
+    environment: projeto tech
+    steps:
+    -
+      name: Checkout
+      uses: actions/checkout@v4
+    -
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASS }}
+    -
+      name: Build Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        load: true
+        tags: bruno01/fiap01:${{ github.sha }}
+    -
+      name: Push to Docker
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: bruno01/fiap01:${{ github.sha }}
+        
+  Test:
+    name: "Testes Unitários"
+    runs-on: ubuntu-latest
+    environment: projeto tech
+    needs: Build-and-Test
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: "Construir imagem Docker"
+      run: docker-compose up -d
+      env:
+        MARIADB_HOST: ${{ vars.MARIADB_HOST }}
+        MARIADB_USER: ${{ vars.MARIADB_USER }}
+        MARIADB_DATABASE: ${{ vars.MARIADB_DATABASE }}
+        MARIADB_PASS: ${{ secrets.MARIADB_PASS }}
+        MARIADB_PORT: ${{ vars.MARIADB_PORT }}
+        MP_URL: ${{ vars.MP_URL }}
+        MP_CLIENT_SECRET: ${{ secrets.MP_CLIENT_SECRET }}
+        MP_CLIENT_ID: ${{ secrets.MP_CLIENT_ID }}
+        MP_NOTIFICATION_URL: ${{ vars.MP_NOTIFICATION_URL }}
+        
+    - name: "Unit Test" 
+      run: docker run docker.io/library/fiaptech_web npm test
+   
+  sonarcloud:
+    name: SonarCloud
+    needs: [Build-and-Test, Test]
+    environment: projeto tech
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  deploy-dev:
+    name: Deploy em Desenvolvimento
+    if: ${{github.ref_name == 'dev'}}
+    needs : [Build-and-Test, Test, sonarcloud]
+    environment: projeto tech
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: "Pre Deploy"
+        uses: actions/checkout@v3
+      -
+        name: "Realizando deploy HOMOLOG"
+        run: echo "REALIZANDO DEPLOY AWS ref:"${{ github.ref }}
+  
+  deploy-prod:
+    if: ${{github.ref_name == 'main'}}
+    name: Deploy em Produção
+    needs: [Build-and-Test, Test, sonarcloud]
+    environment: projeto tech
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pré Deploy
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 
+
+      - name: Dispatch Manual Event to Deploy Kubernets
+        run: | 
+              curl -L \
+              -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/brunoblauzius-fiap/kubernetes-manifest/actions/workflows/main.yml/dispatches \
+              -d '{"ref": ${{github.ref_name}},"inputs":{"docker_hub_tag": "${{ github.sha }}", "manifest_name" : "web_cafeteria"}}'
+    

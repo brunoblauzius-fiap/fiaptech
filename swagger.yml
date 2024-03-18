@@ -1,0 +1,760 @@
+openapi: "3.0.2"
+info:
+  title: Projeto Pedidos
+  version: "1.0"
+servers:
+  - url: http://localhost:30002/api/v1
+  - url: http://localhost:3000/api/v1
+paths:
+  #user
+  /user/auth:
+    post:
+      summary: Retorna o token para autenticação.
+      description: Infoma o token para autenticação o tempo de expiração e qual o tipo de utilização
+      security: []
+      tags:
+        - "User"
+      responses:
+        "200":
+          description: retorna um token para autenticação
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Auth"
+  #cliente
+  /cliente:
+    get:
+      summary: Recupera uma lista de usuários.
+      description: Recupera uma lista de usuarios no sistema.
+      tags:
+        - "Cliente"
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: recupera os dados de um usuário pelo email especifico ou parcial
+        - in: query
+          name: cpf_cnpj
+          schema:
+            type: string
+          description: recupera os dados de um usuário pelo documento em especifico ou parcial
+      responses:
+        "200":
+          description: retorna uma lista de itens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/cliente"
+    post:
+      summary: Cria um novo usuário.
+      tags:
+        - "Cliente"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                cpf_cnpj:
+                  type: string
+                  format: number
+                  example: "000.000.000-00"
+              required:
+                - "name"
+                - "email"
+                - "cpf_cnpj"
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+  /cliente/{id}:
+    get:
+      summary: Recupera um cliente pelo ID
+      tags:
+        - "Cliente"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do cliente
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+    put:
+      summary: Atualiza os dados de um Cliente.
+      tags:
+        - "Cliente"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                cpf_cnpj:
+                  type: string
+                  format: number
+                  example: "000.000.000-00"
+              required:
+                - "name"
+                - "email"
+                - "cpf_cnpj"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+    delete:
+      summary: Deleta um usuário.
+      tags:
+        - "Cliente"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do cliente
+      responses:
+        "204":
+          description: OK
+  /cliente/{cpfcnpj}/identify:
+    get:
+      summary: Recupera um cliente pelo número do documento
+      tags:
+        - "Cliente"
+      parameters:
+        - in: path
+          name: cpfcnpj
+          schema:
+            type: integer
+          required: true
+          description: CPF/CNPJ do cliente
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+  #categoria
+  /categoria:
+    get:
+      summary: Recupera uma lista de categorias.
+      description: Recupera uma lista de categorias cadastrada no sistema.
+      tags:
+        - "Categoria"
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: recupera uma categoria pelo npme em especifico ou parcial
+      responses:
+        "200":
+          description: retorna uma lista de itens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Categoria"
+    post:
+      summary: Cria um nova categoria.
+      tags:
+        - "Categoria"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - "name"
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Categoria"
+  /categoria/{id}:
+    get:
+      summary: Recupera uma categoria pelo ID
+      tags:
+        - "Categoria"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do categoria
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Categoria"
+    put:
+      summary: Atualiza os dados de uma categoria.
+      tags:
+        - "Categoria"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do categoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required:
+                - "name"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Categoria"
+    delete:
+      summary: Deleta uma Categoria.
+      tags:
+        - "Categoria"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do Categoria
+      responses:
+        "204":
+          description: OK
+  #produto
+  /produto:
+    get:
+      summary: Recupera uma lista de produtos.
+      description: Recupera uma lista de produtos cadastrada no sistema.
+      tags:
+        - "Produto"
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: recupera um produto pelo titulo em especifico ou parcial
+      responses:
+        "200":
+          description: retorna uma lista de itens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Produto"
+    post:
+      summary: Cria um novo produto.
+      tags:
+        - "Produto"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category_id:
+                  type: number
+                  format: integer
+                value:
+                  type: number
+                  format: decimal
+                description:
+                  type: string
+              required:
+                - "name"
+                - "value"
+                - "category_id"
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Produto"
+  /produto/{id}:
+    get:
+      summary: Recupera um produto pelo ID
+      tags:
+        - "Produto"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do produto
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Produto"
+    put:
+      summary: Atualiza os dados de um produto.
+      tags:
+        - "Produto"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                category_id:
+                  type: number
+                  format: integer
+                value:
+                  type: number
+                  format: decimal
+                description:
+                  type: string
+              required:
+                - "name"
+                - "value"
+                - "category_id"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Produto"
+    delete:
+      summary: Deleta um produto.
+      tags:
+        - "Produto"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do produto
+      responses:
+        "204":
+          description: OK
+  /produto/categoria/{category_id}:
+    get:
+      summary: Recupera os produto de uma categoria especifica
+      tags:
+        - "Produto"
+      parameters:
+        - in: path
+          name: category_id
+          schema:
+            type: integer
+          required: true
+          description: ID da categoria do produto
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Produto"
+  #pedido
+  /pedidos:
+    get:
+      summary: Recupera uma lista de pedidos.
+      description: Recupera uma lista de pedidos no sistema.
+      tags:
+        - "Pedido"
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+          description: recupera os dados de um pedido pelo status especifico ou parcial
+      responses:
+        "200":
+          description: retorna uma lista de pedidos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pedidos"
+    post:
+      summary: Cria um novo pedido.
+      tags:
+        - "Pedido"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                client_id:
+                  type: number
+                  format: integer
+                produtosIds:
+                  type: array
+                  format: integer
+              required:
+                - "status"
+                - "client_id"
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pedidos"
+  /pedidos/{id}:
+    get:
+      summary: Recupera um pedido pelo ID
+      tags:
+        - "Pedido"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do pedido
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pedidos"
+  /pedidos/update/{id}:
+    put:
+      summary: Atualiza status de um pedido pelo ID
+      tags:
+        - "Pedido"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID do pedido
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pedidos"
+  #checkout
+  /checkout:
+    post:
+      summary: "Cria um pagamento de para um Pedido"
+      tags:
+        - "Checkout"
+      requestBody:
+        $ref: '#/components/requestBodies/CheckoutBody'
+      responses:
+        "201":
+          description: "Requisição para pagamento realizada com sucesso."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payment_method_id:
+                    type: number
+                    format: integer
+                    example: 1
+                  pedido_id:
+                    type: number
+                    format: integer
+                    example: 1
+                  status:
+                      type: number
+                      format: integer
+                      example: 1
+                  uuid:
+                      type: string
+                      example: '0115b81d-067e-4b62-a4c3-253e1b218712'
+                  cartao:
+                    $ref: '#/components/schemas/Cartao'
+  /checkout/hook/{pedido_id}:
+    put:
+      summary: "Executa o pagamento e recebe um retorno de pagamento do gateway de pagamento escolhido"
+      tags:
+        - "Checkout"
+      parameters:
+        - in: path
+          name: pedido_id
+          schema:
+            type: integer
+          required: true
+          description: ID do pedido
+      responses:
+          "200":
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Checkout"
+  /checkout/{pedidoId}/status:
+    get:
+        summary: Recupera o status de pagamento do pedido pelo ID do pedido
+        tags:
+          - "Checkout"
+        parameters:
+          - in: path
+            name: pedidoId
+            schema:
+              type: integer
+            required: true
+            description: ID do pedido
+        responses:
+          "200":
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/Checkout"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  requestBodies:
+    CheckoutBody:
+      description: "Payload para cadastro ou atualização do checkout"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              payment_method_id:
+                type: number
+                format: integer
+                example: 1
+              pedido_id:
+                type: number
+                format: integer
+                example: 1
+              payer:
+                $ref: '#/components/schemas/Payer'
+  schemas:
+    Auth:
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjYsImV4cCI6MTY5NzkyMjAwNjA1MywibmFtZSI6IkJydW5vIEJsYXV6aXVzIHNjaHVpbmR0IiwiZW1haWwiOiJicnVub2JsYXV6aXVzQGdtYWlsLmNvbSJ9.QVh-6NZB0gKTgiS2xBKNdgau2ZS0dOqyCnxNWFxAGW8
+        expires_in:
+          type: number
+          example: 3600
+        scope:
+          type: string
+          example: customScope
+        token_type:
+          type: string
+          example: Bearer
+    cliente:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          example: Admin
+        email:
+          type: string
+          format: email
+          example: admin@teste.com
+        cpf_cnpj:
+          type: string
+          format: number
+          example: "000.000.000-00"
+        created:
+          type: string
+          format: datetime
+        modified:
+          type: string
+          format: datetime
+      required:
+        - "name"
+        - "email"
+        - "cpf_cnpj"
+    Categoria:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          example: Admin
+        created:
+          type: string
+          format: datetime
+        modified:
+          type: string
+          format: datetime
+      required:
+        - "name"
+    Produto:
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+          example: Teste
+        category_id:
+          type: number
+          format: integer
+        description:
+          type: string
+          example: Teste de produto
+        value:
+          type: number
+          format: decimal
+          example: 0.00
+        created:
+          type: string
+          format: datetime
+        modified:
+          type: string
+          format: datetime
+      required:
+        - "id"
+        - "title"
+        - "value"
+        - "category_id"
+    Pedidos:
+       properties:
+         id:
+           type: integer
+         customer_id:
+           type: integer
+           example: ID Cliente
+         status:
+           type: string
+           enum:
+           - 0- CRIADO
+           - 1- RECEBIDO
+           - 2- EM_PREPARACAO
+           - 3- PRONTO
+           - 4- FINALIZADO
+       required:
+         - "id"
+         - "customer_id"
+         - "status"
+    Payer: 
+      properties:
+        name:
+          type: string
+          example: 'Jhon Doe'
+        email:
+          type: string
+          example : jhondoe@test.com
+        document:
+          type: string
+          example: '317.594.877-40'
+    Cartao:
+      properties:
+        number:
+          type: integer
+          example: '4171-9043-4466-6522'
+        cvv:
+          type: integer
+          example: 171
+        expiration_date:
+          type: string
+          format: date
+        payer:
+          $ref: '#/components/schemas/Payer'
+    Checkout:
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        pedido:
+          $ref: "#/components/schemas/Pedidos"
+        cliente:
+          $ref: "#/components/schemas/cliente"
+        status_id:
+          type: integer
+          example: 1
+        created:
+          type: string
+          format: datetime
+        modified:
+          type: string
+          format: datetime
+      required:
+        - "status_id"
+        - "uuid"
+
+security:
+  - BearerAuth: [JWT]
