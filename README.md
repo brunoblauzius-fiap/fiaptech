@@ -25,6 +25,7 @@ Neste vídeo, estou criando um banco de dados usando o Terraform. Explico o proc
 https://www.loom.com/share/899b10cecb8b4618ab141e491e81a8b4?sid=fb46921a-f021-4f11-80a3-ede33b20d431
 
 Codigo: https://github.com/brunoblauzius-fiap/tech-infra-db
+#
 
 #### - INFRAESTRUTURA TERRAFORM APPLY INFRA EKS
 
@@ -37,9 +38,11 @@ Video 2:
 https://www.loom.com/share/721f6c6f83b740259bc1be26ca78445c?sid=5ef186c8-1b5b-469e-ad5c-2ddcc9d14dca
 
 Código: https://github.com/brunoblauzius-fiap/tech-infra
-
+#
 #### - DEPLOY APLICAÇÃO AWS CI / CD
 Nos videos a baixo está a estratégia de automatização do deploy usando Github Actions com Kubernets na AWS.
+
+![plot](diagrama_deploy.jpg)
 
 Video 1 CI: https://www.loom.com/share/baf428c5c69c4b53b9d998ca6be32de7?sid=eaccafd8-5312-4f7a-b220-f6bd4910c01b
 
@@ -48,6 +51,7 @@ Video 2 CD: https://www.loom.com/share/895cb50cf6044754995874c3a93aa114?sid=6cfd
 Video 3 Proteção de Branchs: https://www.loom.com/share/df90c68cf35a4cd797845d94f1d2ae7a?sid=ed95c93a-cba8-4ed9-804e-1fb308a705ba
 
 Código: https://github.com/brunoblauzius-fiap/fiaptech
+
 
 ## Architecture
 
