@@ -35,8 +35,8 @@ export default class Server{
 
         this.app.route('/').get((req, res) => {
             res.json({
-                'version' : '1.1.5',
-                'date' : '2024-03-17' 
+                'version' : '1.1.6',
+                'date' : '2024-03-18' 
             });
         });
         this.app.use('/api/v1/', userRouter(this.dbconnection));
